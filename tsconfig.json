@@ -10,6 +10,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@config/*": ["./src/config/*"],
+      "@common/*":["./src/common/*"],
+      "@apartments/*":["./src/apartments/*"],
+      "@/*": ["./src/*"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
