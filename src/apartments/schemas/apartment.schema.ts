@@ -1,6 +1,10 @@
-import * as slugUpdater from 'mongoose-slug-updater';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types, Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+
+export interface GeoJsonPoint {
+  type: 'Point';
+  coordinates: [number, number];
+}
 
 export interface IApartment {
   _id: Types.ObjectId;
@@ -14,55 +18,69 @@ export interface IApartment {
   area: number;
   unitNumber: number;
   project: string;
+  location: GeoJsonPoint;
+  developer: string;
+  coverImage: string;
   images: string[];
   createdAt: Date;
   updatedAt: Date;
 }
 
+export interface IApartmentPublic extends Omit<IApartment, '_id'> {
+  _id: string;
+}
+
 export type IApartmentDocument = Document & IApartment;
 
 @Schema({ timestamps: true })
-export class Apartment
-  extends Document
-  implements Omit<IApartment, '_id' | 'createdAt' | 'updatedAt'>
-{
-  @Prop({ required: true, min: 3, max: 255, trim: true })
+export class Apartment extends Document {
+  @Prop({ required: true, index: true })
   name: string;
-
-  @Prop({ required: true, unique: true, slug: ['project', 'name'] })
+  @Prop({ index: true, slug: ['developer', 'project', 'unitNumber'] })
   slug: string;
-
-  @Prop({ trim: true })
+  @Prop({ required: true })
   description: string;
-
   @Prop({ required: true })
   address: string;
-
-  @Prop({ required: true, type: Number })
+  @Prop({ required: true })
   price: number;
-
-  @Prop({ required: true, type: Number })
+  @Prop({ required: true })
   bedrooms: number;
-
-  @Prop({ required: true, type: Number })
+  @Prop({ required: true })
   bathrooms: number;
-
-  @Prop({ required: true, type: Number })
+  @Prop({ required: true })
   area: number;
-
-  @Prop({ required: true, type: Number })
+  @Prop({ required: true })
   unitNumber: number;
+  @Prop({ required: true })
+  project: string;
+
+  @Prop({ required: true })
+  images: string[];
+
+  @Prop({ required: true })
+  developer: string;
+
+  @Prop({ required: true })
+  coverImage: string;
 
   @Prop({
-    required: true,
-    trim: true,
-    lowercase: true,
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
   })
-  project: string; // In a more complex setting this should be a reference to a Project document
-
-  @Prop([String])
-  images: string[];
+  location: GeoJsonPoint;
 }
-
 export const ApartmentSchema = SchemaFactory.createForClass(Apartment);
-ApartmentSchema.plugin(slugUpdater);
+
+ApartmentSchema.index({ location: '2dsphere' });
+ApartmentSchema.index({ name: 'text' });
+ApartmentSchema.index({ project: 'text' });
+ApartmentSchema.index({ developer: 'text' });
+ApartmentSchema.index({ price: 1 });
