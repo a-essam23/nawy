@@ -27,7 +27,7 @@ async function bootstrap() {
     preflightContinue: false,
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalFilters(new MongooseExceptionFilter());

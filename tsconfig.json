@@ -11,6 +11,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
+      "@ctypes/*": ["./src/types/*"],
+      "@ctypes": ["./src/types"],
       "@config/*": ["./src/config/*"],
       "@common/*":["./src/common/*"],
       "@apartments/*":["./src/apartments/*"],

@@ -34,13 +34,13 @@ export type IApartmentDocument = Document & IApartment;
 
 @Schema({ timestamps: true })
 export class Apartment extends Document {
-  @Prop({ required: true, index: true })
+  @Prop({ required: true, index: true, lowercase: true })
   name: string;
   @Prop({ index: true, slug: ['developer', 'project', 'unitNumber'] })
   slug: string;
   @Prop({ required: true })
   description: string;
-  @Prop({ required: true })
+  @Prop({ required: true, lowercase: true })
   address: string;
   @Prop({ required: true })
   price: number;
@@ -52,13 +52,13 @@ export class Apartment extends Document {
   area: number;
   @Prop({ required: true })
   unitNumber: number;
-  @Prop({ required: true })
+  @Prop({ required: true, lowercase: true })
   project: string;
 
   @Prop({ required: true })
   images: string[];
 
-  @Prop({ required: true })
+  @Prop({ required: true, lowercase: true })
   developer: string;
 
   @Prop({ required: true })
