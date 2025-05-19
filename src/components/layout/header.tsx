@@ -1,4 +1,3 @@
-import cn from "@/utils/cn";
 import { AppShell, Burger, Group, Text } from "@mantine/core";
 import Link from "next/link";
 interface LayoutProps {
@@ -9,7 +8,7 @@ interface LayoutProps {
 
 const LayoutHeader: React.FC<LayoutProps> = ({ opened, toggle, pinned }) => {
   return (
-    <AppShell.Header className={"border-0! bg-white/10! backdrop-blur-lg"}>
+    <AppShell.Header className={"bg-white/10! backdrop-blur-lg"}>
       <Group h="100%" px="md">
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Link href="/" className="transition flex items-center">

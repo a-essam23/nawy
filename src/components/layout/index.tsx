@@ -1,13 +1,24 @@
 "use client";
-import { AppShell, Burger, Group, Skeleton, Text } from "@mantine/core";
+import {
+  AppShell,
+  AppShellMainProps,
+  AppShellProps,
+  Burger,
+  Group,
+  Skeleton,
+  Text,
+} from "@mantine/core";
 import { useDisclosure, useHeadroom } from "@mantine/hooks";
 import LayoutHeader from "./header";
+import cn from "@utils/cn";
 
-interface LayoutProps {
+interface LayoutProps extends AppShellProps {
   children: React.ReactNode;
+  className?: string;
+  mainProps?: AppShellMainProps;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, className, mainProps }: LayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
   const pinned = useHeadroom({ fixedAt: 120 });
 
@@ -29,7 +40,13 @@ const Layout = ({ children }: LayoutProps) => {
             <Skeleton key={index} h={28} mt="sm" animate={false} />
           ))}
       </AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main
+        mb={"4rem"}
+        {...mainProps}
+        className={cn(className, mainProps?.className)}
+      >
+        {children}
+      </AppShell.Main>
     </AppShell>
   );
 };
