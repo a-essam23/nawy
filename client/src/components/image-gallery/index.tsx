@@ -1,7 +1,14 @@
 "use client";
 import { useState } from "react";
 import { Carousel } from "@mantine/carousel";
-import { Box, Container, Modal, Text, UnstyledButton } from "@mantine/core";
+import {
+  Box,
+  Container,
+  Modal,
+  Stack,
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 import Image from "next/image";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
@@ -78,9 +85,14 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
         centered
         withCloseButton
         title={
-          <Text fz={"h3"} span>
-            {name}
-          </Text>
+          <Stack className="capitalize" gap={0}>
+            <Text fz={"h3"} span>
+              {name}
+            </Text>
+            <Text span c="dimmed">
+              {location}
+            </Text>
+          </Stack>
         }
       >
         <div className="flex h-[80vh] ">

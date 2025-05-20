@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ApartmentsModule } from './apartments/apartments.module';
@@ -8,6 +8,7 @@ import configuration from './config/configuration';
 import { configurationSchema } from '@config/configuration.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { RequestLoggerMiddleware } from '@middlewares/request-logger.middleware';
 
 @Module({
   imports: [
@@ -42,4 +43,9 @@ import { FileUploadModule } from './file-upload/file-upload.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    consumer.apply(RequestLoggerMiddleware).forRoutes('*');
+  }
+}

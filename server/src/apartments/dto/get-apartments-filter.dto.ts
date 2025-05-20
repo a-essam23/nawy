@@ -1,7 +1,12 @@
 import { IsOptional, IsString, IsNumber, Min, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiPropertyOptional } from '@nestjs/swagger'; // Added
 
 export class GetApartmentsFilterDto {
+  @ApiPropertyOptional({
+    description: 'Search term for apartment name, description, etc.',
+    example: 'Nile View',
+  }) // Added
   @IsOptional()
   @IsString()
   searchTerm?: string;

@@ -22,7 +22,7 @@ This full-stack application allows users to browse, search, view details of, and
     - [Backend](#backend)
     - [Frontend](#frontend)
     - [Database](#database)
-    - [DevOps](#devops)
+    - [Documentation:](#documentation)
   - [Project Structure](#project-structure)
   - [Getting Started](#getting-started)
     - [1. Clone the Repository](#1-clone-the-repository)
@@ -38,6 +38,7 @@ This full-stack application allows users to browse, search, view details of, and
 *   **Apartment Details:** View detailed information for a specific apartment, including multiple images and its location on a map.
 *   **Add Apartment:** A multi-step form to add new apartment listings with image uploads and location input.
 *   **Responsive Design:** The frontend is designed to work seamlessly on all devices.
+*   **Documentation:** Swagger API documentation for the backend.
 
 ### Bonus Features
 
@@ -93,9 +94,8 @@ This full-stack application allows users to browse, search, view details of, and
 *   **Type:** NoSQL
 *   **Database:** MongoDB
 
-### DevOps
-
-*   **Containerization:** Docker & Docker Compose
+### Documentation:
+*   **API Documentation:** Swagger (for backend)
 
 ## Project Structure
 
