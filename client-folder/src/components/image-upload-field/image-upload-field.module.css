@@ -1,0 +1,41 @@
+/* components/ImageUploadField.module.css */
+.dropzone {
+  border: 2px dashed var(--mantine-color-gray-4);
+  padding: var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-md);
+  transition: border-color 150ms ease;
+}
+
+.dropzone:hover {
+  border-color: var(--mantine-color-blue-filled);
+}
+
+.previewCard {
+  overflow: hidden; /* Ensure actions overlay stays within bounds */
+}
+
+.actionsOverlay {
+  opacity: 0;
+  transition: opacity 150ms ease;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  padding: var(--mantine-spacing-xs);
+  border-bottom-left-radius: var(--mantine-radius-sm);
+  border-bottom-right-radius: var(--mantine-radius-sm);
+}
+
+.previewCard:hover .actionsOverlay {
+  opacity: 1;
+}
+
+.coverIndicator {
+  position: absolute;
+  top: var(--mantine-spacing-xs);
+  left: var(--mantine-spacing-xs);
+  background-color: var(--mantine-color-yellow-filled);
+  color: var(--mantine-color-black);
+  padding: rem(2px) rem(6px);
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: bold;
+  z-index: 1;
+}
