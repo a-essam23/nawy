@@ -66,6 +66,10 @@ This full-stack application allows users to browse, search, view details of, and
   - Configure a method to share types between frontend and backend. (likely using Swagger)
 - **Testing:**
   - Implement unit and integration tests for the backend and frontend.
+- **SEO:**
+  - Implement dynamic meta tags for SEO.
+- **Persistant Filters:**
+  - Implement a method to save user preferences (filters) in cookies for persistent filtering even while SSR.
 
 ## Tech Stack
 
@@ -95,7 +99,7 @@ This full-stack application allows users to browse, search, view details of, and
 *   **Database:** MongoDB
 
 ### Documentation:
-*   **API Documentation:** Swagger (for backend)
+*   **API Documentation:** Swagger (for backend) `localhost:3100/api`
 
 ## Project Structure
 
