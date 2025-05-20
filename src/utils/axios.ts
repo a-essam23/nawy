@@ -11,7 +11,7 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-const apiRequest = async <T = unknown>(
+const apiRequest = async <T = any>(
   config: AxiosRequestConfig
 ): Promise<ApiResponse<T>> => {
   try {

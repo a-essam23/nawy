@@ -4,21 +4,30 @@ import {
   AppShellMainProps,
   AppShellProps,
   Burger,
+  Button,
   Group,
   Skeleton,
+  Stack,
   Text,
 } from "@mantine/core";
 import { useDisclosure, useHeadroom } from "@mantine/hooks";
 import LayoutHeader from "./header";
 import cn from "@utils/cn";
+import { globalRoutes } from "@stores/routes-store";
+import Link from "next/link";
 
-interface LayoutProps extends AppShellProps {
+interface LayoutProps extends AppShellMainProps {
   children: React.ReactNode;
   className?: string;
-  mainProps?: AppShellMainProps;
+  shellProps?: AppShellProps;
 }
 
-const Layout = ({ children, className, mainProps }: LayoutProps) => {
+const Layout = ({
+  children,
+  className,
+  shellProps,
+  ...mainProps
+}: LayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
   const pinned = useHeadroom({ fixedAt: 120 });
 
@@ -30,21 +39,24 @@ const Layout = ({ children, className, mainProps }: LayoutProps) => {
         breakpoint: "sm",
         collapsed: { mobile: !opened, desktop: !opened },
       }}
+      {...shellProps}
     >
       <LayoutHeader opened={opened} toggle={toggle} pinned={pinned} />
       <AppShell.Navbar p="md">
-        Navbar
-        {Array(5)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
+        <Stack gap="xs">
+          {globalRoutes.map((r) => (
+            <Button
+              component={Link}
+              key={r.href}
+              href={r.href}
+              className="capitalize"
+            >
+              {r.label}
+            </Button>
           ))}
+        </Stack>
       </AppShell.Navbar>
-      <AppShell.Main
-        mb={"4rem"}
-        {...mainProps}
-        className={cn(className, mainProps?.className)}
-      >
+      <AppShell.Main mb={"4rem"} {...mainProps} className={cn(className)}>
         {children}
       </AppShell.Main>
     </AppShell>

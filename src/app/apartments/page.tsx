@@ -15,12 +15,14 @@ const ApartmentListingsPage = async () => {
   );
   return (
     <Layout className="flex">
-      <Container mt={"xl"} className="flex flex-col gap-8">
+      <div className="hidden w-[300px] h-1/4 2xl:flex bg-red-500" />
+      <Container size="md" mt={"xl"} className="flex flex-col gap-8">
         <Group wrap="nowrap">
           <ApartmentFiltersSidebar />
           <Searchbar />
         </Group>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
           {data?.data.map((a) => (
             <ApartmentListingCard apartment={a} key={a._id} />
           ))}

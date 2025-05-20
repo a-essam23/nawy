@@ -7,8 +7,7 @@ export const formatPrice = (price: number) => {
 };
 
 export const formatArea = (area: number) => {
-  // return area + " m²";
-  return area.toLocaleString("en-US") + " m²"; // 1,000,000 forma
+  return area.toLocaleString("en-US") + " m²";
 };
 
 export function debounce<F extends (...args: any[]) => any>(
@@ -24,3 +23,7 @@ export function debounce<F extends (...args: any[]) => any>(
     timeoutId = setTimeout(() => func(...args), waitFor);
   };
 }
+
+export const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};

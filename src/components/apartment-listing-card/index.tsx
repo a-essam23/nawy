@@ -2,6 +2,7 @@ import { formatArea, formatPrice } from "@/utils";
 import { Badge, Box, Card, Text } from "@mantine/core";
 import { ApartmentListingDto } from "@server";
 import { IconBathFilled, IconBedFilled } from "@tabler/icons-react";
+import Image from "next/image";
 import Link from "next/link";
 interface ApartmentListingCardProps {
   apartment: ApartmentListingDto;
@@ -18,13 +19,17 @@ const ApartmentListingCard: React.FC<ApartmentListingCardProps> = ({
       href={`/apartments/${apartment.slug}`}
     >
       <div className="relative aspect-video overflow-hidden">
-        <img
-          src={apartment.coverImage}
-          alt={apartment.name}
-          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+        <Image
+          src={apartment?.coverImage || "/placeholder.svg"}
+          alt={`${apartment.name} cover image`}
+          className="object-cover transition-transform duration-300 hover:scale-105"
+          placeholder="blur"
+          blurDataURL={apartment.coverImage}
+          fill
+          sizes="100%"
         />
       </div>
-      <Box className="p-4">
+      <Box className="p-4 border-x border-gray-200">
         <div className="mb-2 flex items-center gap-2">
           <Badge c="dimmed" variant="default" className="px-2 py-1 min-w-fit">
             {formatArea(apartment.area)}
