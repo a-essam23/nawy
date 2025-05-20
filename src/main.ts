@@ -19,15 +19,23 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const PORT = configService.get('PORT') as number;
+  const appUrls = configService.get<string[]>('APP_URLS');
 
   app.enableCors({
-    origin: '*',
+    origin: appUrls,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     preflightContinue: false,
   });
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      enableDebugMessages: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  );
 
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalFilters(new MongooseExceptionFilter());

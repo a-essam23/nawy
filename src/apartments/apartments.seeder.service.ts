@@ -30,15 +30,14 @@ export class ApartmentSeederService implements OnModuleInit {
       let createdCount = 0;
       for (const mockApt of mockData) {
         const unitNumber = mockApt.id;
-
-        const name = `${mockApt.property_type.name} ${mockApt.compound.name} ${unitNumber}`;
-
+        const slug = `${mockApt.compound?.developer?.name.trim().toLowerCase().replaceAll(' ', '-')}-${mockApt.compound?.name.trim().toLocaleLowerCase().replaceAll(' ', '-')}-${unitNumber}`;
+        const name = `${mockApt.compound?.developer?.name} ${mockApt.compound?.name} ${unitNumber}`;
         const existingApartment = await this.apartmentModel.findOne({
-          name,
+          slug,
         });
 
         if (existingApartment) {
-          this.logger.debug(`Apartment ${name} already exists. Skipping.`);
+          // this.logger.debug(`Apartment ${name} already exists. Skipping.`);
           continue;
         }
 
@@ -81,7 +80,7 @@ export class ApartmentSeederService implements OnModuleInit {
           undefined;
 
         const apartmentToCreate: Partial<Apartment> = {
-          unitNumber: mockApt.id,
+          unitNumber: mockApt.id.toString(),
           name: name,
           description: mockApt.one_line_description,
           address: address,

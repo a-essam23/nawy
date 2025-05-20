@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
 import { configurationSchema } from '@config/configuration.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       inject: [ConfigService],
     }),
     ApartmentsModule,
+    FileUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

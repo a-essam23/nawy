@@ -1,17 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Apartment, IApartmentDocument } from './schemas/apartment.schema';
+import {
+  Apartment,
+  IApartment,
+  IApartmentDocument,
+} from './schemas/apartment.schema';
 import { FilterQuery, Model } from 'mongoose';
 import { GetApartmentsFilterDto } from './dto/get-apartments-filter.dto';
 import { ApartmentListingDto } from './dto/apartment-listing.dto';
 import { IGetAllReponse } from '@ctypes/index';
+import { CreateApartmentDto } from './dto/create-apartment-dto';
+import { FileUploadService } from '@/file-upload/file-upload.service';
 
 @Injectable()
 export class ApartmentsService {
   private readonly logger = new Logger(ApartmentsService.name);
   constructor(
-    @InjectModel(Apartment.name) private apartmentModel: Model<Apartment>,
+    @InjectModel(Apartment.name) private apartmentModel: Model<IApartment>,
+    private readonly fileUploadService: FileUploadService,
   ) {}
 
   private _buildFilterQuery(
@@ -170,10 +182,102 @@ export class ApartmentsService {
     ]);
 
     return {
-      data: apartments as ApartmentListingDto[],
+      data: apartments as any,
       total,
       page,
       limit,
     };
+  }
+
+  async create(
+    createApartmentDto: CreateApartmentDto,
+    images: Array<Express.Multer.File>,
+  ): Promise<IApartmentDocument> {
+    if (!images || images.length === 0) {
+      throw new BadRequestException('No images provided.');
+    }
+    const location = createApartmentDto.location
+      ? {
+          type: 'Point',
+          coordinates: [
+            createApartmentDto.location.longitude,
+            createApartmentDto.location.latitude,
+          ],
+        }
+      : undefined;
+    const newApartment = await this.apartmentModel.create({
+      name: createApartmentDto.name,
+      description: createApartmentDto.description,
+      price: createApartmentDto.price,
+      bedrooms: createApartmentDto.bedrooms,
+      bathrooms: createApartmentDto.bathrooms,
+      area: createApartmentDto.area,
+      project: createApartmentDto.project,
+      developer: createApartmentDto.developer,
+      address: createApartmentDto.address,
+      unitNumber: createApartmentDto.unitNumber,
+      coverImage: '/placeholder.svg',
+      location,
+    });
+    const apartmentId = newApartment._id.toString();
+    this.logger.debug(`Created apartment with _id: ${apartmentId}`);
+    this.logger.debug(
+      `Uploading ${images.length} images for apartment with _id: ${apartmentId}`,
+    );
+    const uploadedImages =
+      await this.fileUploadService.bulkUploadImages(images);
+    console.log(uploadedImages);
+    if (uploadedImages) {
+      newApartment.coverImage =
+        uploadedImages[createApartmentDto.coverIndex].url!;
+      newApartment.images = uploadedImages.map((v) => v.url!);
+      await newApartment.save();
+    } else {
+      this.logger.error(
+        `Failed to upload images for apartment with _id: ${apartmentId}`,
+      );
+    }
+
+    return newApartment;
+  }
+
+  async searchByText({
+    limit = 10,
+    text,
+  }: {
+    text: string;
+    limit?: number;
+  }): Promise<IApartmentDocument[]> {
+    if (!text || text.trim() === '') return [];
+
+    this.logger.log(`Weighted text search for: "${text}", limit: ${limit}`);
+    const results: IApartmentDocument[] = [];
+    const foundIds = new Set<string>();
+
+    const addUniqueResults = (newResults: IApartmentDocument[]) => {
+      for (const doc of newResults) {
+        const docId: string = (doc._id as any).toString();
+        if (results.length < limit && !foundIds.has(docId)) {
+          results.push(doc);
+          foundIds.add(docId);
+        }
+        if (results.length >= limit) break;
+      }
+    };
+
+    this.logger.log(`Performing weighted text index search for: "${text}"`);
+    const textSearchResults = await this.apartmentModel
+      .find(
+        {
+          $text: { $search: text },
+        },
+        { score: { $meta: 'textScore' } },
+      )
+      .sort({ score: { $meta: 'textScore' } }) // Sort by relevance score (honors weights)
+      .limit(limit)
+      .exec();
+    addUniqueResults(textSearchResults);
+    console.log(results);
+    return results;
   }
 }

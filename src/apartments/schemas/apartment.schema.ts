@@ -16,7 +16,7 @@ export interface IApartment {
   bedrooms: number;
   bathrooms: number;
   area: number;
-  unitNumber: number;
+  unitNumber: string;
   project: string;
   location: GeoJsonPoint;
   developer: string;
@@ -36,7 +36,11 @@ export type IApartmentDocument = Document & IApartment;
 export class Apartment extends Document {
   @Prop({ required: true, index: true, lowercase: true })
   name: string;
-  @Prop({ index: true, slug: ['developer', 'project', 'unitNumber'] })
+  @Prop({
+    index: true,
+    slug: ['developer', 'project', 'unitNumber'],
+    unique: true,
+  })
   slug: string;
   @Prop({ required: true })
   description: string;
@@ -51,17 +55,17 @@ export class Apartment extends Document {
   @Prop({ required: true })
   area: number;
   @Prop({ required: true })
-  unitNumber: number;
+  unitNumber: string;
   @Prop({ required: true, lowercase: true })
   project: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: [] })
   images: string[];
 
   @Prop({ required: true, lowercase: true })
   developer: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: '/placeholder.svg' })
   coverImage: string;
 
   @Prop({
@@ -80,7 +84,23 @@ export class Apartment extends Document {
 export const ApartmentSchema = SchemaFactory.createForClass(Apartment);
 
 ApartmentSchema.index({ location: '2dsphere' });
-ApartmentSchema.index({ name: 'text' });
-ApartmentSchema.index({ project: 'text' });
-ApartmentSchema.index({ developer: 'text' });
 ApartmentSchema.index({ price: 1 });
+ApartmentSchema.index(
+  {
+    name: 'text',
+    unitNumber: 'text',
+    project: 'text',
+    developer: 'text',
+    description: 'text',
+  },
+  {
+    weights: {
+      name: 10,
+      unitNumber: 8,
+      project: 5,
+      developer: 3,
+      description: 1,
+    },
+    name: 'ApartmentTextSearchIndex',
+  },
+);
