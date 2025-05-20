@@ -1,0 +1,43 @@
+services:
+  client:
+    build:
+      context: ./client-folder
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - nawy-network
+    depends_on:
+      - server
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ./server-folder
+      dockerfile: Dockerfile
+    ports:
+      - "3100:3100"
+    networks:
+      - nawy-network
+    environment:
+      - MONGO_URL=mongodb://nawy-mongodb-1:27017/nawy
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - nawy-network
+    restart: unless-stopped
+
+networks:
+  nawy-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
