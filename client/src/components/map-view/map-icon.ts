@@ -1,4 +1,5 @@
 export const placeMarkerIcon = () => {
+  // eslint-disable-next-line
   const { Icon } = require("leaflet");
 
   return new Icon({

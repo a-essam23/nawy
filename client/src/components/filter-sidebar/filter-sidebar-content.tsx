@@ -26,7 +26,6 @@ import { formatArea, formatPrice } from "@utils/index";
 
 interface ApartmentFilterSidebarContentProps {
   isMobile: boolean;
-  openDrawer: () => void;
   closeDrawer: () => void;
   withSearch?: boolean;
   maxPrice?: number;
@@ -71,7 +70,6 @@ const ApartmentFilterSidebarContent: React.FC<
 > = ({
   closeDrawer,
   isMobile,
-  openDrawer,
   maxArea = 1000,
   maxPrice = 50000000,
   withSearch,

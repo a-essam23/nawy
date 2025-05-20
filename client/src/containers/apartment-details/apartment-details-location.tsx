@@ -1,9 +1,9 @@
 import React from "react";
-import { IApartmentPublic } from "@server";
 import DynamicMapView from "@components/map-view/map-view-dynamic";
+import { IApartment } from "@ctypes";
 
 interface ApartmentLocationProps {
-  apartment: IApartmentPublic;
+  apartment: IApartment;
 }
 
 const ApartmentLocation: React.FC<ApartmentLocationProps> = ({ apartment }) => {

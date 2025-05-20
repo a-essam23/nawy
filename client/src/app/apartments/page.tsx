@@ -3,16 +3,14 @@ import ApartmentFiltersSidebar from "@components/filter-sidebar";
 import Layout from "@components/layout";
 import Searchbar from "@components/search-bar";
 import { Container, Group } from "@mantine/core";
-import { IGetAllReponse, ApartmentListingDto } from "@server";
 import apiRequest from "@utils/axios";
+import { IGetAllReponse, IListing } from "@ctypes";
 
 const ApartmentListingsPage = async () => {
-  const { data, error } = await apiRequest<IGetAllReponse<ApartmentListingDto>>(
-    {
-      method: "GET",
-      url: "apartments/listings",
-    }
-  );
+  const { data } = await apiRequest<IGetAllReponse<IListing>>({
+    method: "GET",
+    url: "apartments/listings",
+  });
   return (
     <Layout className="flex">
       <div className="hidden w-[300px] h-1/4 2xl:flex bg-red-500" />

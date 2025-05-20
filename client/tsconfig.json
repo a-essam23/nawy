@@ -19,12 +19,11 @@
       }
     ],
     "paths": {
+      "@ctypes":["./src/types"],
       "@utils/*": ["./src/utils/*"],
       "@containers/*": ["./src/containers/*"],
       "@stores/*": ["./src/stores/*"],
       "@components/*": ["./src/components/*"],
-      "@server": ["../server/src/types"],
-      "@server/*": ["../server/src/types/*"],
       "@/*": ["./src/*"]
     }
   },

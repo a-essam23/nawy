@@ -4,11 +4,7 @@ import { Carousel } from "@mantine/carousel";
 import { Box, Container, Modal, Text, UnstyledButton } from "@mantine/core";
 import Image from "next/image";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconLayoutNavbarExpand,
-} from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 interface ImageGalleryProps {
   name: string;
@@ -18,13 +14,14 @@ interface ImageGalleryProps {
   alt: string;
 }
 const ImageGallery: React.FC<ImageGalleryProps> = ({
+  // eslint-disable-next-line
   location,
   name,
   coverImage,
   images,
-  alt,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
+  // eslint-disable-next-line
   const [activeImage, setActiveImage] = useState(coverImage);
   const [activeIndex, setActiveIndex] = useState(0);
 

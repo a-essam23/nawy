@@ -1,10 +1,10 @@
+import { IApartment } from "@ctypes";
 import { Badge } from "@mantine/core";
-import { IApartmentPublic } from "@server";
 import { formatArea, formatPrice } from "@utils/index";
 import React from "react";
 
 interface ApartmentHeaderProps {
-  apartment: IApartmentPublic;
+  apartment: IApartment;
 }
 
 const ApartmentDetailsHeader: React.FC<ApartmentHeaderProps> = ({

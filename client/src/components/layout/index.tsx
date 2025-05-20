@@ -3,12 +3,8 @@ import {
   AppShell,
   AppShellMainProps,
   AppShellProps,
-  Burger,
   Button,
-  Group,
-  Skeleton,
   Stack,
-  Text,
 } from "@mantine/core";
 import { useDisclosure, useHeadroom } from "@mantine/hooks";
 import LayoutHeader from "./header";
@@ -41,7 +37,7 @@ const Layout = ({
       }}
       {...shellProps}
     >
-      <LayoutHeader opened={opened} toggle={toggle} pinned={pinned} />
+      <LayoutHeader opened={opened} toggle={toggle} />
       <AppShell.Navbar p="md">
         <Stack gap="xs">
           {globalRoutes.map((r) => (

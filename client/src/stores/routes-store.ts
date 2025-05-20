@@ -1,5 +1,4 @@
 import { Icon, IconBuilding, IconPlus } from "@tabler/icons-react";
-import { create } from "zustand";
 
 interface IRoute {
   label: string;

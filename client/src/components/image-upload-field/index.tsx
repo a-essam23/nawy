@@ -70,7 +70,7 @@ export function ImageUploadField({
       onCoverImageChange(0); // Set the very first image (index 0) in the combined list as cover
     }
   };
-
+  // eslint-disable-next-line
   const handleReject = (rejectedFiles: any[]) => {
     if (rejectedFiles.length > 0 && rejectedFiles[0].errors) {
       setError(

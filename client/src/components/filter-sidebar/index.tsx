@@ -12,6 +12,7 @@ interface ApartmentFiltersSidebarProps {
 }
 
 const ApartmentFiltersSidebar: React.FC<ApartmentFiltersSidebarProps> = ({
+  // eslint-disable-next-line
   withSearch = true,
 }) => {
   const theme = useMantineTheme();
@@ -40,7 +41,6 @@ const ApartmentFiltersSidebar: React.FC<ApartmentFiltersSidebarProps> = ({
           <ApartmentFilterSidebarContent
             closeDrawer={closeDrawer}
             isMobile={true}
-            openDrawer={openDrawer}
           />
         </Drawer>
       </>
@@ -56,7 +56,6 @@ const ApartmentFiltersSidebar: React.FC<ApartmentFiltersSidebarProps> = ({
       <ApartmentFilterSidebarContent
         closeDrawer={closeDrawer}
         isMobile={false}
-        openDrawer={openDrawer}
       />
     </Box>
   );

@@ -1,11 +1,11 @@
 import { formatArea, formatPrice } from "@/utils";
 import { Badge, Box, Card, Text } from "@mantine/core";
-import { ApartmentListingDto } from "@server";
+import { IListing } from "@ctypes";
 import { IconBathFilled, IconBedFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 interface ApartmentListingCardProps {
-  apartment: ApartmentListingDto;
+  apartment: IListing;
 }
 
 const ApartmentListingCard: React.FC<ApartmentListingCardProps> = ({

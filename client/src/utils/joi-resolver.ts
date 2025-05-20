@@ -2,6 +2,7 @@ import Joi from "joi";
 import { FormErrors } from "@mantine/form";
 
 export function joiResolver(schema: Joi.ObjectSchema) {
+  // eslint-disable-next-line
   return (values: Record<string, any>): FormErrors => {
     const { error } = schema.validate(values, { abortEarly: false });
     if (!error) {

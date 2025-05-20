@@ -1,5 +1,4 @@
 import { MantineProvider } from "@mantine/core";
-import Layout from "@/components/layout"; // Assuming components is an alias for src/components
 import { Notifications } from "@mantine/notifications";
 
 interface ProvidersProps {

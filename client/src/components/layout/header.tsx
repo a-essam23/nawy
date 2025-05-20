@@ -4,10 +4,9 @@ import Link from "next/link";
 interface LayoutProps {
   opened: boolean;
   toggle: () => void;
-  pinned: boolean;
 }
 
-const LayoutHeader: React.FC<LayoutProps> = ({ opened, toggle, pinned }) => {
+const LayoutHeader: React.FC<LayoutProps> = ({ opened, toggle }) => {
   return (
     <AppShell.Header
       className={"bg-white/10! backdrop-blur-lg flex justify-between"}

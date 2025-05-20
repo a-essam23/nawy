@@ -1,14 +1,14 @@
 import React from "react";
-import { IApartmentPublic } from "@server";
 import ImageGallery from "@components/image-gallery";
 import ApartmentDetailsDescription from "./apartment-details-description";
 import ApartmentDetailsHeader from "./apartment-details-header";
 import ApartmentLocation from "./apartment-details-location";
 import ApartmentDetailsContact from "./apartment-details-contact";
 import { Title } from "@mantine/core";
+import { IApartment } from "@ctypes";
 
 interface ApartmentDetailsProps {
-  apartment: IApartmentPublic;
+  apartment: IApartment;
 }
 
 const ApartmentDetails: React.FC<ApartmentDetailsProps> = ({ apartment }) => {

@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Icon } from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css"; // Important: Import Leaflet CSS
+import "leaflet/dist/leaflet.css";
 import { placeMarkerIcon } from "./map-icon";
 
 export interface MapProps {

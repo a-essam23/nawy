@@ -1,7 +1,7 @@
 services:
   client:
     build:
-      context: ./client-folder
+      context: ./client
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
@@ -13,14 +13,14 @@ services:
 
   server:
     build:
-      context: ./server-folder
+      context: ./server
       dockerfile: Dockerfile
     ports:
       - "3100:3100"
     networks:
       - nawy-network
     environment:
-      - MONGO_URL=mongodb://nawy-mongodb-1:27017/nawy
+      - MONGO_URL=mongodb://nawy-assessment-mongodb-1:27017/nawy
     depends_on:
       - mongodb
     restart: unless-stopped

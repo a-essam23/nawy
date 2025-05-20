@@ -9,7 +9,7 @@ export const formatPrice = (price: number) => {
 export const formatArea = (area: number) => {
   return area.toLocaleString("en-US") + " m²";
 };
-
+// eslint-disable-next-line
 export function debounce<F extends (...args: any[]) => any>(
   func: F,
   waitFor: number

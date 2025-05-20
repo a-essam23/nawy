@@ -16,6 +16,7 @@ import { IconCurrentLocation } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 
 interface LocationInputGroupProps {
+  // eslint-disable-next-line
   form: UseFormReturnType<any>;
 }
 
